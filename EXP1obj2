@@ -1,0 +1,42 @@
+clc;
+clear;
+close all;
+% Given Measurements
+% Case 1: V2 = 0 (Output Port Short-Circuited)
+V1_sc = 10; % Input Voltage (V)
+I1_sc = 5;  % Input Current (A)
+I2_sc = 2;  % Output Current (A)
+% Case 2: V1 = 0 (Input Port Short-Circuited)
+V2_sc = 8;   % Output Voltage (V)
+I1_sc2 = 1.6; % Input Current (A)
+I2_sc2 = 4;   % Output Current (A)
+% Calculation of Y-Parameters
+Y11 = I1_sc / V1_sc;
+Y21 = I2_sc / V1_sc;
+Y12 = I1_sc2 / V2_sc;
+Y22 = I2_sc2 / V2_sc;
+% Display Results
+fprintf('Y-Parameters of the Two-Port Network\n');
+fprintf('------------------------------------\n');
+fprintf('Y11 = %.4f Siemens\n', Y11);
+fprintf('Y12 = %.4f Siemens\n', Y12);
+fprintf('Y21 = %.4f Siemens\n', Y21);
+fprintf('Y22 = %.4f Siemens\n', Y22);
+% Y-Parameter Matrix
+Y = [Y11, Y12;
+    Y21, Y22];
+disp('Y-Parameter Matrix = ');
+disp(Y);
+% Bar Graph Representation
+figure;
+bar([Y11 Y12 Y21 Y22]);
+grid on;
+title('Y-Parameters of Two-Port Network');
+xlabel('Parameters');
+ylabel('Admittance (Siemens)');
+set(gca,'XTickLabel',{'Y11','Y12','Y21','Y22'});
+% Display Matrix in Table Form
+Parameter = {'Y11'; 'Y12'; 'Y21'; 'Y22'};
+Value = [Y11; Y12; Y21; Y22];
+T = table(Parameter, Value);
+disp(T);
