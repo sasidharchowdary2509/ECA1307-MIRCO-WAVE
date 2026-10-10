@@ -1,0 +1,37 @@
+clc;
+clear;
+close all;
+%Given Measurements
+%Case 1: I2 = 0 (Output Port Open-Circuited)
+V1_oc = 12; %Input Voltage (V)
+V2_oc = 6; %OutputVoltage (V)
+I1_oc = 2; %Input Current (A)
+%Case 2: I1 = 0 (Input Port Open-Circuited)
+V1_oc2 = 8; %Input Voltage (V)
+V2_oc2 = 16; %Output Voltage (V)
+I2_oc = 4; %Output Current (A)
+%Calculation of Z-Parameters
+Z11 = V1_oc / I1_oc;
+Z21 = V2_oc / I1_oc;
+Z12 = V1_oc2 / I2_oc;
+Z22 = V2_oc2 / I2_oc;
+%Display Results
+fprintf('Z-Parameters of the Two-Port Network\n');
+fprintf('-----------------------------------\n');
+fprintf('Z11 = %.2f Ohms\n', Z11);
+fprintf('Z12 = %.2f Ohms\n', Z12);
+fprintf('Z21 = %.2f Ohms\n', Z21);
+fprintf('Z22 = %.2f Ohms\n', Z22);
+%Z-Parameter Matrix
+Z =[Z11 Z12;
+    Z21 Z22];
+disp('Z-Parameter Matrix = ');
+disp(Z);
+%Bar Graph Representation
+figure;
+bar([Z11 Z12 Z21 Z22]);
+grid on;
+title('Z-Parameters of Two-Port Network');
+xlabel('Parameters');
+ylabel('Impedance (Ohms)');
+set(gca,'XTickLabel',{'Z11','Z12','Z21','Z22'});
