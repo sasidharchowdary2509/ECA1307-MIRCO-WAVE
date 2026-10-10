@@ -1,0 +1,50 @@
+clc;
+clear;
+close all;
+%Experimental Data for Three Cases
+%Incident Wave Amplitudes
+a1 = [10 15 20]; % Port-1 Incident Wave
+a2 = [0 0 0]; % Port-2 Matched Load
+%Reflected and Transmitted Waves
+b1 = [2 3 4]; % Reflected Wave at Port-1
+b2 = [8 12 16]; % Transmitted Wave at Port-2
+%S-Parameter Calculations
+S11 = b1 ./ a1; % Input Reflection Coefficient
+S21 = b2 ./ a1; % Forward Transmission Coefficient
+%Assume reverse measurements
+a2_rev = [10 15 20];
+b2_rev = [1 1.5 2];
+b1_rev = [7 10 13];
+S22 = b2_rev ./ a2_rev; % Output Reflection Coefficient
+S12 = b1_rev ./ a2_rev; % Reverse Transmission Coefficient
+%Display Results
+disp('Scattering Parameters for Three Cases');
+fprintf('\nCase\tS11\t\tS12\t\tS21\t\tS22\n');
+for i = 1:length(a1)
+    fprintf('%d\t%.3f\t\t%.3f\t\t%.3f\t\t%.3f\n',...
+        i,S11(i),S12(i),S21(i),S22(i));
+end
+%S-Parameter Matrix for each case
+for i = 1:length(a1)
+    S =[S11(i) S12(i);
+        S21(i) S22(i)];
+    fprintf('\nS-Parameter Matrix for Case %d:\n',i);
+    disp(S);
+end
+%Magnitude in dB
+S11_dB = 20*log10(abs(S11));
+S12_dB = 20*log10(abs(S12));
+S21_dB = 20*log10(abs(S21));
+S22_dB = 20*log10(abs(S22));
+%Plotting
+figure;
+plot(1:3,S11_dB,'-o','LineWidth',2);
+hold on;
+plot(1:3,S21_dB,'-s','LineWidth',2);
+plot(1:3,S12_dB,'-^','LineWidth',2);
+plot(1:3,S22_dB,'-d','LineWidth',2);
+grid on;
+xlabel('Case Number');
+ylabel('Magnitude (dB)');
+title('S-Parameter Characteristics of Two-Port Microwave Network');
+legend('S11','S21','S12','S22');
