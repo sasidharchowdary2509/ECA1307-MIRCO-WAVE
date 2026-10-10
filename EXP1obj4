@@ -1,0 +1,38 @@
+clc;
+clear;
+close all;
+V1_oc = 20;
+I1_oc = 4;  
+V2_oc = 10; 
+I2 = 2; 
+V1 = 16;  
+I1 = 3;   
+V2 = 8; 
+A = V1_oc / V2_oc;
+C = I1_oc / V2_oc;
+D = I1 / I2;
+B = (V1 - A*V2) / I2;
+fprintf('ABCD Parameters of the Two-Port Network\n');
+fprintf('---------------------------------------\n');
+fprintf('A = %.2f\n', A);
+fprintf('B = %.2f Ohms\n', B);
+fprintf('C = %.2f Siemens\n', C);
+fprintf('D = %.2f\n', D);
+% ABCD Matrix
+ABCD = [A, B;
+    C, D];
+disp('ABCD Parameter Matrix = ');
+disp(ABCD);
+% Bar Chart Representation
+figure;
+bar([A B C D]);
+grid on;
+title('ABCD Parameters of Two-Port Network');
+xlabel('Parameters');
+ylabel('Magnitude');
+set(gca,'XTickLabel',{'A','B','C','D'});
+% Table Display
+Parameter = {'A'; 'B'; 'C'; 'D'};
+Value = [A; B; C; D];
+T = table(Parameter, Value);
+disp(T);
