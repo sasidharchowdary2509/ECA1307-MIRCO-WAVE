@@ -1,0 +1,42 @@
+clc;
+clear;
+close all;
+%Given Measurements
+%Case 1: V2 = 0(Output Port Short-Circuited)
+V1_sc = 12; % Input Voltage (V)
+I1_sc = 4; % Input Current (A)
+I2_sc = 2; % Output Current (A)
+%Case 2: I1 = 0 (Input Port Open-Circuited)
+V1_oc = 6; % Input Voltage (V)
+V2_oc = 15; % Output Voltage (V)
+I2_oc = 3; % Output Current (A)
+%Calculation of h-Parameters
+h11 = V1_sc / I1_sc; % Input Impedance (Ohms)
+h21 = I2_sc / I1_sc; % Forward Current Gain
+h12 = V1_oc / V2_oc; % Reverse Voltage Gain
+h22 = I2_oc / V2_oc; % Output Admittance (Siemens)
+%Display Results
+fprintf('h-Parameters of the Two-Port Network\n');
+fprintf('------------------------------------\n');
+fprintf('h11 = %.2f Ohms\n', h11);
+fprintf('h12 = %.4f\n', h12);
+fprintf('h21 = %.4f\n', h21);
+fprintf('h22 = %.4f Siemens\n', h22);
+%h-Parameter Matrix
+H=[h11 h12;
+    h21 h22];
+disp('h-Parameter Matrix = ');
+disp(H);
+%BarChart Representation
+figure;
+bar([h11 h12 h21 h22]);
+grid on;
+title('h-Parameters of Two-Port Network');
+xlabel('Parameters');
+ylabel('Magnitude');
+set(gca,'XTickLabel',{'h11','h12','h21','h22'});
+%Table Display
+Parameter = {'h11';'h12';'h21';'h22'};
+Value = [h11;h12;h21;h22];
+T =table(Parameter,Value);
+disp(T);
