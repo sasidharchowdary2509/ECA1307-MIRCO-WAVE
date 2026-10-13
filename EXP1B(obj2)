@@ -1,0 +1,46 @@
+clc;
+clear;
+close all;
+%Frequency Range (GHz)
+frequency = [1 2 3 4 5 6 7 8 9 10];
+%Measured Reflection Coefficient (|S11|)
+S11 = [0.45 0.40 0.35 0.30 0.25 0.20 0.18 0.15 0.12 0.10];
+%Measured Transmission Coefficient (|S21|)
+S21 = [0.60 0.65 0.70 0.75 0.80 0.85 0.88 0.90 0.93 0.95];
+%Return Loss Calculation (dB)
+ReturnLoss =-20 * log10(abs(S11));
+%Power Transmission Efficiency (%)
+Efficiency = (abs(S21).^2) * 100;
+%Display Results
+fprintf('Frequency\tReturn Loss\tEfficiency\n');
+fprintf('(GHz)\t\t(dB)\t\t(%%)\n');
+for i = 1:length(frequency)
+    fprintf('%.1f\t\t%.2f\t\t%.2f\n', ...
+        frequency(i), ReturnLoss(i), Efficiency(i));
+end
+%Plot 1: Return Loss vs Frequency
+figure;
+plot(frequency, ReturnLoss, '-o', 'LineWidth', 2);
+grid on;
+xlabel('Frequency (GHz)');
+ylabel('Return Loss (dB)');
+title('Variation of Return Loss with Frequency');
+%Plot 2: Efficiency vs Frequency
+figure;
+plot(frequency, Efficiency, '-s', 'LineWidth', 2);
+grid on;
+xlabel('Frequency (GHz)');
+ylabel('Power Transmission Efficiency (%)');
+title('Power Transmission Efficiency vs Frequency');
+%Plot 3: Combined Characteristics
+figure;
+yyaxis left
+plot(frequency, ReturnLoss, '-o', 'LineWidth', 2);
+ylabel('Return Loss (dB)');
+yyaxis right
+plot(frequency, Efficiency, '-s', 'LineWidth', 2);
+ylabel('Efficiency (%)');
+xlabel('Frequency (GHz)');
+title('Return Loss and Transmission Efficiency Characteristics');
+grid on;
+legend('Return Loss','Efficiency');
